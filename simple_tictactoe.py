@@ -1,3 +1,8 @@
+import os
+
+def clear_console():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 class tictactoe:
     def __init__(self):
         self.board = [1,2,3,4,5,6,7,8,9]
@@ -30,36 +35,31 @@ class tictactoe:
 
 def main():
     count = 9
-    print(count)
-    count = 'abc'
-    print(count)
     game = tictactoe()
+    game.board_print()
     while count:
-        game.board_print()
         if count % 2 == 1:
             print("player 1 insert position for X", "\n")
             val = 'X'
+            player = 1
         else:
-            print("player 1 insert position for O", "\n")
+            print("player 2 insert position for Y", "\n")
             val = 'Y'
+            player = 2
         pos = int(input("enter position now"))
         pos = pos-1
         if (pos < 0 or pos > 8):
             print("enter a valid position", "\n")
             continue
         set_board = game.board_set(pos,val)
+        clear_console()
+        game.board_print()
         if set_board == True:
-            print("success: position set")
+            print("Last success: Player {} position at {} set".format(player, pos+1), "\n")
             win = game.board_check()
             if win == True:
-                if count % 2 == 1:
-                    print("************player 1 wins***********", "\n")
-                    game.board_print()
-                    return
-                else:
-                    print("************player 2 wins***********", "\n")
-                    game.board_print()
-                    return
+                print("************player {} wins***********".format(player), "\n")
+                return
         else:
             print("error: position already set")
             continue
